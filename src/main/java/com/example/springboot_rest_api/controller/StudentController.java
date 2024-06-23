@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("students")
 public class StudentController {
 
 //    @GetMapping("/student")
@@ -24,7 +25,7 @@ public class StudentController {
         return ResponseEntity.ok().header("custom-header", "Lolo").body(student);
     }
 
-    @GetMapping("/students")
+    @GetMapping
     public ResponseEntity<List<Student>> getStudents(){
         List<Student> students = new ArrayList<>();
 
@@ -35,19 +36,19 @@ public class StudentController {
         return ResponseEntity.ok(students);
     }
 
-    @GetMapping("/students/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Student> studentPathVariable(@PathVariable("id") int studentId) {
         Student student = new Student(studentId, "George","Lucas");
         return ResponseEntity.ok(student);
     }
 
-    @GetMapping("/students/search")
+    @GetMapping("/search")
     public ResponseEntity<Student> studentRequestParam(@RequestParam int id) {
         Student student = new Student(id,"George","Lucas");
         return ResponseEntity.ok(student);
     }
 
-    @PostMapping("students/create")
+    @PostMapping("/create")
     //@ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
         System.out.println(student.getId());
@@ -57,14 +58,14 @@ public class StudentController {
         return new ResponseEntity<>(student, HttpStatus.CREATED);
     }
 
-    @PutMapping("/students/{id}/update")
+    @PutMapping("/{id}/update")
     public ResponseEntity<Student> updateStudent(@RequestBody Student student, @PathVariable int id) {
         System.out.println(student.getFirstName());
         System.out.println(student.getLastName());
         return ResponseEntity.ok(student);
     }
 
-    @DeleteMapping("/students/{id}/delete")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity<String> deleteStudent(@PathVariable("id") int studentId) {
         return ResponseEntity.ok("Deleted successfully.");
     }
